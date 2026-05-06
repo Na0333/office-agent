@@ -1,0 +1,11 @@
+{
+  "command": "/usr/bin/env",
+  "args": [
+    "PYTHONPATH=/AstrBot/data/office-agent",
+    "DATABASE_PATH=/AstrBot/data/office-agent/data/office_agent.db",
+    "MCP_TRANSPORT=stdio",
+    "/AstrBot/data/office-agent/.venv/bin/python",
+    "-m",
+    "app.mcp_server.server"
+  ]
+}

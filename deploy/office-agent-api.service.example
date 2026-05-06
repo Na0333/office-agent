@@ -1,0 +1,15 @@
+[Unit]
+Description=Office Agent FastAPI Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/AstrBot/data/office-agent
+Environment=PYTHONPATH=/AstrBot/data/office-agent
+Environment=DATABASE_PATH=/AstrBot/data/office-agent/data/office_agent.db
+ExecStart=/AstrBot/data/office-agent/.venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

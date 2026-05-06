@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "office-agent": {
+      "command": "/ABSOLUTE/PATH/TO/office-agent/.venv/bin/python",
+      "args": [
+        "-m",
+        "app.mcp_server.server"
+      ],
+      "env": {
+        "PYTHONPATH": "/ABSOLUTE/PATH/TO/office-agent",
+        "DATABASE_PATH": "/ABSOLUTE/PATH/TO/office-agent/data/office_agent.db",
+        "MCP_TRANSPORT": "stdio"
+      }
+    }
+  }
+}

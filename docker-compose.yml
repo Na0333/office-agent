@@ -1,0 +1,61 @@
+services:
+  mcp:
+    build: .
+    container_name: office-agent-mcp
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      PYTHONPATH: /app
+      DATABASE_PATH: /app/data/office_agent.db
+      UPLOAD_DIR: /app/data/files
+      GOTENBERG_URL: ${GOTENBERG_URL:-http://host.docker.internal:3000}
+      GOTENBERG_TIMEOUT: ${GOTENBERG_TIMEOUT:-120}
+      OFFICE_AGENT_FONT_DIR: /usr/local/share/fonts/office-agent
+      OFFICE_AGENT_DOCX_FONT: ${OFFICE_AGENT_DOCX_FONT:-Noto Serif CJK SC}
+      MCP_TRANSPORT: streamable-http
+      MCP_HOST: 0.0.0.0
+      MCP_PORT: 8010
+      MCP_STREAMABLE_HTTP_PATH: /mcp
+    ports:
+      - "8010:8010"
+    volumes:
+      - ./data:/app/data
+      - ../gotenberg/fonts:/usr/local/share/fonts/office-agent:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: python -m app.mcp_server.server
+
+  api:
+    profiles:
+      - api
+    build: .
+    container_name: office-agent-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      HOST: 0.0.0.0
+      PORT: 8000
+      DATABASE_PATH: /app/data/office_agent.db
+      UPLOAD_DIR: /app/data/files
+      GOTENBERG_URL: ${GOTENBERG_URL:-http://host.docker.internal:3000}
+      GOTENBERG_TIMEOUT: ${GOTENBERG_TIMEOUT:-120}
+      OFFICE_AGENT_FONT_DIR: /usr/local/share/fonts/office-agent
+      OFFICE_AGENT_DOCX_FONT: ${OFFICE_AGENT_DOCX_FONT:-Noto Serif CJK SC}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ../gotenberg/fonts:/usr/local/share/fonts/office-agent:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

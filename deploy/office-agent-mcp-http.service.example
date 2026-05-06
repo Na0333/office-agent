@@ -1,0 +1,19 @@
+[Unit]
+Description=Office Agent MCP Streamable HTTP Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/AstrBot/data/office-agent
+Environment=PYTHONPATH=/AstrBot/data/office-agent
+Environment=DATABASE_PATH=/AstrBot/data/office-agent/data/office_agent.db
+Environment=MCP_TRANSPORT=streamable-http
+Environment=MCP_HOST=0.0.0.0
+Environment=MCP_PORT=8010
+Environment=MCP_STREAMABLE_HTTP_PATH=/mcp
+ExecStart=/AstrBot/data/office-agent/.venv/bin/python -m app.mcp_server.server
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
