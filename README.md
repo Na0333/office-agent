@@ -7,6 +7,9 @@
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 [![MCP Protocol](https://img.shields.io/badge/MCP-Compatible-purple.svg)](https://modelcontextprotocol.io/)
+[![Award: 华为杯 2026](https://img.shields.io/badge/Award-%E5%8D%8E%E4%B8%BA%E6%9D%AF%202026%20%E7%9C%81%E4%B8%89%E7%AD%89%E5%A5%96-brightgreen.svg)](https://huawei.com)
+
+**2026年"华为杯"大学生计算机设计大赛省三等奖作品**
 
 让 AI 自动处理你的会议纪要、待办任务、文档转换、邮件发送和跨平台通知。
 
